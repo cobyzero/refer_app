@@ -1,9 +1,9 @@
 {
   "welcomeBack": "Welcome back.",
   "home": "Home",
-  "welcomeSubtitle": "The perfect roast is just a sign-in away.",
+  "welcomeSubtitle": "Your referrals and rewards are just a sign-in away.",
   "email": "Email",
-  "emailHint": "name@editorialroast.com",
+  "emailHint": "name@email.com",
   "password": "Password",
   "passwordHint": "........",
   "forgotPassword": "Forgot Password?",
@@ -33,11 +33,22 @@
   "viewProfile": "View Profile",
   "english": "English",
   "spanish": "Spanish",
-  "signupSubtitle": "Begin your sensory journey with us.",
+  "signupSubtitle": "Create your account and start referring.",
   "fullName": "Full Name",
   "fullNameHint": "Elias Thorne",
   "confirmPassword": "Confirm Password",
-  "acceptTerms": "I accept the Terms and Conditions and Privacy Policy.",
+  "acceptTerms": "I accept the {terms} and {privacy}.",
+  "@acceptTerms": {
+    "description": "The app replaces {terms} and {privacy} with links. Each must appear exactly once.",
+    "placeholders": {
+      "terms": {
+        "type": "String"
+      },
+      "privacy": {
+        "type": "String"
+      }
+    }
+  },
   "keepUpdated": "Keep me updated with seasonal collections and exclusive roastery news.",
   "accountCreatedSuccess": "Account created successfully!",
   "passwordsDoNotMatch": "Passwords do not match",
@@ -112,6 +123,8 @@
   "orderSuccessDetail": "Your artisanal brew will be ready in 10-15 minutes.",
   "backToHome": "Back to Home",
   "selectFutureTime": "Please select a time in the future",
+  "orderCreateError": "We couldn't create your order. Please try again.",
+  "orderConfirmError": "Your payment was received but we couldn't confirm your order. Please contact support.",
   "errorLoadingOrders": "Error loading orders",
   "noOrdersFound": "No orders found",
   "thisMonth": "THIS MONTH",
@@ -321,7 +334,18 @@
   },
   "sendCode": "Send code",
   "resetPassword": "Reset password",
-  "agreeTermsPrivacy": "By signing in you agree to our Terms and Privacy Policy.",
+  "agreeTermsPrivacy": "By signing in you agree to our {terms} and {privacy}.",
+  "@agreeTermsPrivacy": {
+    "description": "The app replaces {terms} and {privacy} with links. Each must appear exactly once.",
+    "placeholders": {
+      "terms": {
+        "type": "String"
+      },
+      "privacy": {
+        "type": "String"
+      }
+    }
+  },
   "back": "Back",
   "updateRequiredTitle": "Update required",
   "updateRequiredMessage": "This version is no longer supported. Update to version {version} or later to continue.",
@@ -351,5 +375,26 @@
   },
   "updateNow": "Update now",
   "remindLater": "Later",
-  "couldNotOpenStore": "Couldn't open the app store"
+  "couldNotOpenStore": "Couldn't open the app store",
+  "couldNotOpenLink": "Couldn't open the link",
+  "verifyEmailTitle": "Verify your email",
+  "verifyEmailSubtitle": "Enter the 6-digit code we sent to {email}.",
+  "@verifyEmailSubtitle": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyEmailAction": "Verify email",
+  "emailVerifiedSuccess": "Email verified! You are signed in.",
+  "resendCode": "Resend code",
+  "resendCodeCooldown": "Resend in {seconds}s",
+  "@resendCodeCooldown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  }
 }

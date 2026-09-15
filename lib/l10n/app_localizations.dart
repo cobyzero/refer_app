@@ -113,7 +113,7 @@ abstract class AppLocalizations {
   /// No description provided for @welcomeSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'The perfect roast is just a sign-in away.'**
+  /// **'Your referrals and rewards are just a sign-in away.'**
   String get welcomeSubtitle;
 
   /// No description provided for @email.
@@ -125,7 +125,7 @@ abstract class AppLocalizations {
   /// No description provided for @emailHint.
   ///
   /// In en, this message translates to:
-  /// **'name@editorialroast.com'**
+  /// **'name@email.com'**
   String get emailHint;
 
   /// No description provided for @password.
@@ -305,7 +305,7 @@ abstract class AppLocalizations {
   /// No description provided for @signupSubtitle.
   ///
   /// In en, this message translates to:
-  /// **'Begin your sensory journey with us.'**
+  /// **'Create your account and start referring.'**
   String get signupSubtitle;
 
   /// No description provided for @fullName.
@@ -326,11 +326,11 @@ abstract class AppLocalizations {
   /// **'Confirm Password'**
   String get confirmPassword;
 
-  /// No description provided for @acceptTerms.
+  /// The app replaces {terms} and {privacy} with links. Each must appear exactly once.
   ///
   /// In en, this message translates to:
-  /// **'I accept the Terms and Conditions and Privacy Policy.'**
-  String get acceptTerms;
+  /// **'I accept the {terms} and {privacy}.'**
+  String acceptTerms(String terms, String privacy);
 
   /// No description provided for @keepUpdated.
   ///
@@ -661,6 +661,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Please select a time in the future'**
   String get selectFutureTime;
+
+  /// No description provided for @orderCreateError.
+  ///
+  /// In en, this message translates to:
+  /// **'We couldn't create your order. Please try again.'**
+  String get orderCreateError;
+
+  /// No description provided for @orderConfirmError.
+  ///
+  /// In en, this message translates to:
+  /// **'Your payment was received but we couldn't confirm your order. Please contact support.'**
+  String get orderConfirmError;
 
   /// No description provided for @errorLoadingOrders.
   ///
@@ -1436,11 +1448,11 @@ abstract class AppLocalizations {
   /// **'Reset password'**
   String get resetPassword;
 
-  /// No description provided for @agreeTermsPrivacy.
+  /// The app replaces {terms} and {privacy} with links. Each must appear exactly once.
   ///
   /// In en, this message translates to:
-  /// **'By signing in you agree to our Terms and Privacy Policy.'**
-  String get agreeTermsPrivacy;
+  /// **'By signing in you agree to our {terms} and {privacy}.'**
+  String agreeTermsPrivacy(String terms, String privacy);
 
   /// No description provided for @back.
   ///
@@ -1495,6 +1507,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Couldn\'t open the app store'**
   String get couldNotOpenStore;
+
+  /// No description provided for @couldNotOpenLink.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t open the link'**
+  String get couldNotOpenLink;
+
+  /// No description provided for @verifyEmailTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify your email'**
+  String get verifyEmailTitle;
+
+  /// No description provided for @verifyEmailSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit code we sent to {email}.'**
+  String verifyEmailSubtitle(String email);
+
+  /// No description provided for @verifyEmailAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify email'**
+  String get verifyEmailAction;
+
+  /// No description provided for @emailVerifiedSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Email verified! You are signed in.'**
+  String get emailVerifiedSuccess;
+
+  /// No description provided for @resendCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend code'**
+  String get resendCode;
+
+  /// No description provided for @resendCodeCooldown.
+  ///
+  /// In en, this message translates to:
+  /// **'Resend in {seconds}s'**
+  String resendCodeCooldown(int seconds);
 }
 
 class _AppLocalizationsDelegate

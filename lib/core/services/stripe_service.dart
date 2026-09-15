@@ -27,17 +27,19 @@ class StripeService {
     await Stripe.instance.applySettings();
   }
 
-  Future<void> makePayment({
-    required double amount,
+  /// Order-first flow: the intent is created for the SERVER total of a
+  /// PENDING_PAYMENT order. Raw client amounts are no longer accepted.
+  Future<void> payForOrder({
+    required String orderId,
     required String currency,
     required Function() onSuccess,
     required Function(String) onError,
   }) async {
     try {
-      // 1. Create payment intent on the backend
+      // 1. Create payment intent on the backend for this order
       final response = await apiClient.dio.post(
         '/payments/create-payment-intent',
-        data: {'amount': amount, 'currency': currency},
+        data: {'orderId': orderId, 'currency': currency},
       );
 
       if (response.statusCode != 201) {
@@ -45,7 +47,7 @@ class StripeService {
         return;
       }
 
-      final clientSecret = response.data['clientSecret'];
+      final clientSecret = response.data['clientSecret'] as String? ?? '';
 
       // 2. Initialize payment sheet
       await Stripe.instance.initPaymentSheet(
@@ -59,8 +61,8 @@ class StripeService {
       // 3. Present payment sheet
       await Stripe.instance.presentPaymentSheet();
 
-      // 4. On success
-      onSuccess();
+      // 4. On success (awaited: callers keep their busy state until confirm).
+      await onSuccess();
     } catch (e) {
       if (e is StripeException) {
         onError(e.error.localizedMessage ?? 'Transaction cancelled');

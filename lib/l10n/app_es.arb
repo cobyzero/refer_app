@@ -1,9 +1,9 @@
 {
   "welcomeBack": "Bienvenido de nuevo.",
   "home": "Inicio",
-  "welcomeSubtitle": "El tostado perfecto está a solo un inicio de sesión.",
+  "welcomeSubtitle": "Tus referidos y recompensas están a solo un inicio de sesión.",
   "email": "Correo electrónico",
-  "emailHint": "nombre@editorialroast.com",
+  "emailHint": "nombre@correo.com",
   "password": "Contraseña",
   "passwordHint": "........",
   "forgotPassword": "¿Olvidaste tu contraseña?",
@@ -33,11 +33,22 @@
   "viewProfile": "Ver Perfil",
   "english": "Inglés",
   "spanish": "Español",
-  "signupSubtitle": "Comienza tu viaje sensorial con nosotros.",
+  "signupSubtitle": "Crea tu cuenta y empieza a referir.",
   "fullName": "Nombre Completo",
   "fullNameHint": "Elias Thorne",
   "confirmPassword": "Confirmar Contraseña",
-  "acceptTerms": "Acepto los Términos y Condiciones y la Política de Privacidad.",
+  "acceptTerms": "Acepto los {terms} y la {privacy}.",
+  "@acceptTerms": {
+    "description": "La app reemplaza {terms} y {privacy} con enlaces. Ambos deben aparecer exactamente una vez.",
+    "placeholders": {
+      "terms": {
+        "type": "String"
+      },
+      "privacy": {
+        "type": "String"
+      }
+    }
+  },
   "keepUpdated": "Manténganme actualizado con colecciones de temporada y noticias exclusivas del tostadero.",
   "accountCreatedSuccess": "¡Cuenta creada exitosamente!",
   "passwordsDoNotMatch": "Las contraseñas no coinciden",
@@ -112,6 +123,8 @@
   "orderSuccessDetail": "Tu café artesanal estará listo en 10-15 minutos.",
   "backToHome": "Volver al Inicio",
   "selectFutureTime": "Por favor selecciona una hora en el futuro",
+  "orderCreateError": "No pudimos crear tu pedido. Intenta de nuevo.",
+  "orderConfirmError": "Tu pago fue recibido pero no pudimos confirmar tu pedido. Contacta a soporte.",
   "errorLoadingOrders": "Error al cargar pedidos",
   "noOrdersFound": "No hay pedidos realizados",
   "thisMonth": "ESTE MES",
@@ -321,7 +334,18 @@
   },
   "sendCode": "Enviar código",
   "resetPassword": "Restablecer contraseña",
-  "agreeTermsPrivacy": "Al iniciar sesión aceptas nuestros Términos y Política de Privacidad.",
+  "agreeTermsPrivacy": "Al iniciar sesión aceptas nuestros {terms} y {privacy}.",
+  "@agreeTermsPrivacy": {
+    "description": "La app reemplaza {terms} y {privacy} con enlaces. Ambos deben aparecer exactamente una vez.",
+    "placeholders": {
+      "terms": {
+        "type": "String"
+      },
+      "privacy": {
+        "type": "String"
+      }
+    }
+  },
   "back": "Atrás",
   "updateRequiredTitle": "Actualización requerida",
   "updateRequiredMessage": "Esta versión ya no es compatible. Actualiza a la versión {version} o superior para continuar.",
@@ -351,5 +375,26 @@
   },
   "updateNow": "Actualizar ahora",
   "remindLater": "Más tarde",
-  "couldNotOpenStore": "No se pudo abrir la tienda"
+  "couldNotOpenStore": "No se pudo abrir la tienda",
+  "couldNotOpenLink": "No se pudo abrir el enlace",
+  "verifyEmailTitle": "Verifica tu correo",
+  "verifyEmailSubtitle": "Ingresa el código de 6 dígitos que enviamos a {email}.",
+  "@verifyEmailSubtitle": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "verifyEmailAction": "Verificar correo",
+  "emailVerifiedSuccess": "¡Correo verificado! Sesión iniciada.",
+  "resendCode": "Reenviar código",
+  "resendCodeCooldown": "Reenviar en {seconds}s",
+  "@resendCodeCooldown": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  }
 }

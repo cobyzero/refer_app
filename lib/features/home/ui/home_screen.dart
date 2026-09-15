@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
           children: [
             Semantics(
               image: true,
-              label: 'Raymund Caffé logo',
+              label: 'Refer App logo',
               child: Container(
                 height: 36,
                 width: 36,
@@ -46,13 +46,13 @@ class HomeScreen extends StatelessWidget {
                   border: Border.all(color: AppColors.separator, width: 1),
                 ),
                 padding: const EdgeInsets.all(6),
-                child: Image.asset('assets/images/logo.png', fit: BoxFit.contain,
+                child: Image.asset('assets/images/refer_logo.png', fit: BoxFit.contain,
                     errorBuilder: (_, __, ___) => const Icon(Icons.coffee_rounded, size: 18, color: AppColors.primary)),
               ),
             ),
             const SizedBox(width: 10),
             Text(
-              'Raymund Caffé',
+              'Refer App',
               style: GoogleFonts.kaushanScript(
                 fontSize: 18,
                 color: AppColors.primary,
@@ -232,7 +232,6 @@ class HomeScreen extends StatelessWidget {
                             description: product.description,
                             price: Money.format(product.price),
                             imageUrl: product.imageUrl,
-                            rating: product.rating.toStringAsFixed(1),
                           ),
                         );
                       },

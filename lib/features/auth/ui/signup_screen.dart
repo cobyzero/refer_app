@@ -12,6 +12,7 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import 'widgets/auth_input_field.dart';
 import 'widgets/auth_header.dart';
+import 'widgets/legal_text.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -112,6 +113,12 @@ class _SignupScreenState extends State<SignupScreen> {
                         sl<CartBloc>().reconnect();
                         context.go('/main');
                       }
+                      if (state is AuthEmailNotVerified) {
+                        AppSnackBar.success(context, state.message);
+                        context.push(
+                          '/verify-email?email=${Uri.encodeComponent(state.email)}',
+                        );
+                      }
                       if (state is AuthError) {
                         AppSnackBar.error(context, state.message);
                       }
@@ -182,7 +189,6 @@ class _SignupScreenState extends State<SignupScreen> {
                             _buildCheckboxRow(
                               value: _acceptTerms,
                               onChanged: (v) => setState(() => _acceptTerms = v ?? false),
-                              label: l10n.acceptTerms,
                             ),
                             const SizedBox(height: 24),
                             Semantics(
@@ -237,8 +243,8 @@ class _SignupScreenState extends State<SignupScreen> {
   Widget _buildCheckboxRow({
     required bool value,
     required ValueChanged<bool?> onChanged,
-    required String label,
   }) {
+    final l10n = AppLocalizations.of(context)!;
     return Semantics(
       container: true,
       child: InkWell(
@@ -263,13 +269,19 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               const SizedBox(width: 12),
               Expanded(
-                child: Text(
-                  label,
+                child: LegalText(
+                  text: l10n.acceptTerms(
+                    l10n.termsOfService,
+                    l10n.privacyPolicy,
+                  ),
+                  termsLabel: l10n.termsOfService,
+                  privacyLabel: l10n.privacyPolicy,
+                  textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        fontSize: 13,
-                        color: AppColors.textSecondary,
-                        height: 1.4,
-                      ),
+                    fontSize: 13,
+                    color: AppColors.textSecondary,
+                    height: 1.4,
+                  ),
                 ),
               ),
             ],

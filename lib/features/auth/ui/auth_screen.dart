@@ -12,6 +12,7 @@ import '../bloc/auth_event.dart';
 import '../bloc/auth_state.dart';
 import 'widgets/auth_input_field.dart';
 import 'widgets/auth_header.dart';
+import 'widgets/legal_text.dart';
 
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
@@ -103,6 +104,12 @@ class _AuthScreenState extends State<AuthScreen> {
                         // token); reconectar ahora con el token recién guardado.
                         sl<CartBloc>().reconnect();
                         context.go('/main');
+                      }
+                      if (state is AuthEmailNotVerified) {
+                        AppSnackBar.error(context, state.message);
+                        context.push(
+                          '/verify-email?email=${Uri.encodeComponent(state.email)}',
+                        );
                       }
                       if (state is AuthError) {
                         AppSnackBar.error(context, state.message);
@@ -239,9 +246,13 @@ class _AuthScreenState extends State<AuthScreen> {
                               _buildSignupLink(l10n),
 
                               const SizedBox(height: 16),
-                              Text(
-                                l10n.agreeTermsPrivacy,
-                                textAlign: TextAlign.center,
+                              LegalText(
+                                text: l10n.agreeTermsPrivacy(
+                                  l10n.termsOfService,
+                                  l10n.privacyPolicy,
+                                ),
+                                termsLabel: l10n.termsOfService,
+                                privacyLabel: l10n.privacyPolicy,
                                 style: Theme.of(context).textTheme.bodySmall
                                     ?.copyWith(
                                       color: AppColors.textTertiary,

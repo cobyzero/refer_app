@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:refer_app/l10n/app_localizations.dart';
 import '../../../core/theme.dart';
+import '../../../core/utils/legal_launcher.dart';
 import '../../../core/widgets/user_avatar.dart';
 import '../../../core/bloc/locale_cubit.dart';
 import '../../home/bloc/home_bloc.dart';
@@ -59,8 +60,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
           const SizedBox(height: 24),
           _buildSectionHeader(l10n.supportLegal),
           _buildSettingsItem(icon: Icons.help_outline_rounded, title: l10n.helpCenter, onTap: () => context.push('/help-center')),
-          _buildSettingsItem(icon: Icons.gavel_outlined, title: l10n.termsOfService, onTap: () {}),
-          _buildSettingsItem(icon: Icons.privacy_tip_outlined, title: l10n.privacyPolicy, onTap: () {}),
+          _buildSettingsItem(icon: Icons.gavel_outlined, title: l10n.termsOfService, onTap: () => openTermsOfService(context)),
+          _buildSettingsItem(icon: Icons.privacy_tip_outlined, title: l10n.privacyPolicy, onTap: () => openPrivacyPolicy(context)),
           const SizedBox(height: 28),
           _buildSignOutButton(l10n),
           const SizedBox(height: 24),

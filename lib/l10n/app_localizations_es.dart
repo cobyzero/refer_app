@@ -16,13 +16,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get welcomeSubtitle =>
-      'El tostado perfecto está a solo un inicio de sesión.';
+      'Tus referidos y recompensas están a solo un inicio de sesión.';
 
   @override
   String get email => 'Correo electrónico';
 
   @override
-  String get emailHint => 'nombre@editorialroast.com';
+  String get emailHint => 'nombre@correo.com';
 
   @override
   String get password => 'Contraseña';
@@ -112,7 +112,7 @@ class AppLocalizationsEs extends AppLocalizations {
   String get spanish => 'Español';
 
   @override
-  String get signupSubtitle => 'Comienza tu viaje sensorial con nosotros.';
+  String get signupSubtitle => 'Crea tu cuenta y empieza a referir.';
 
   @override
   String get fullName => 'Nombre Completo';
@@ -124,8 +124,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get confirmPassword => 'Confirmar Contraseña';
 
   @override
-  String get acceptTerms =>
-      'Acepto los Términos y Condiciones y la Política de Privacidad.';
+  String acceptTerms(String terms, String privacy) {
+    return 'Acepto los $terms y la $privacy.';
+  }
 
   @override
   String get keepUpdated =>
@@ -299,6 +300,13 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get selectFutureTime => 'Por favor selecciona una hora en el futuro';
+
+  @override
+  String get orderCreateError => 'No pudimos crear tu pedido. Intenta de nuevo.';
+
+  @override
+  String get orderConfirmError =>
+      'Tu pago fue recibido pero no pudimos confirmar tu pedido. Contacta a soporte.';
 
   @override
   String get errorLoadingOrders => 'Error al cargar pedidos';
@@ -726,8 +734,9 @@ class AppLocalizationsEs extends AppLocalizations {
   String get resetPassword => 'Restablecer contraseña';
 
   @override
-  String get agreeTermsPrivacy =>
-      'Al iniciar sesión aceptas nuestros Términos y Política de Privacidad.';
+  String agreeTermsPrivacy(String terms, String privacy) {
+    return 'Al iniciar sesión aceptas nuestros $terms y $privacy.';
+  }
 
   @override
   String get back => 'Atrás';
@@ -761,4 +770,29 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get couldNotOpenStore => 'No se pudo abrir la tienda';
+
+  @override
+  String get couldNotOpenLink => 'No se pudo abrir el enlace';
+
+  @override
+  String get verifyEmailTitle => 'Verifica tu correo';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return 'Ingresa el código de 6 dígitos que enviamos a $email.';
+  }
+
+  @override
+  String get verifyEmailAction => 'Verificar correo';
+
+  @override
+  String get emailVerifiedSuccess => '¡Correo verificado! Sesión iniciada.';
+
+  @override
+  String get resendCode => 'Reenviar código';
+
+  @override
+  String resendCodeCooldown(int seconds) {
+    return 'Reenviar en ${seconds}s';
+  }
 }

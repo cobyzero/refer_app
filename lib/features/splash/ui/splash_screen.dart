@@ -76,9 +76,7 @@ class _SplashScreenState extends State<SplashScreen>
       builder: (dialogContext) => AlertDialog(
         backgroundColor: Colors.white,
         surfaceTintColor: Colors.transparent,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16),
-        ),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
         title: Row(
           children: [
             Container(
@@ -118,9 +116,7 @@ class _SplashScreenState extends State<SplashScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.of(dialogContext).pop(false),
-            style: TextButton.styleFrom(
-              minimumSize: const Size(44, 44),
-            ),
+            style: TextButton.styleFrom(minimumSize: const Size(44, 44)),
             child: Text(l10n.remindLater),
           ),
           const SizedBox(width: 6),
@@ -135,10 +131,7 @@ class _SplashScreenState extends State<SplashScreen>
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12),
               ),
-              padding: const EdgeInsets.symmetric(
-                horizontal: 20,
-                vertical: 12,
-              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             ),
             child: Text(l10n.updateNow),
           ),
@@ -154,10 +147,13 @@ class _SplashScreenState extends State<SplashScreen>
       child: BlocListener<SplashBloc, SplashState>(
         listener: (context, state) async {
           if (state is SplashForceUpdate) {
-            context.go('/update-required', extra: {
-              'minVersion': state.minVersion,
-              'installedVersion': state.installedVersion,
-            });
+            context.go(
+              '/update-required',
+              extra: {
+                'minVersion': state.minVersion,
+                'installedVersion': state.installedVersion,
+              },
+            );
           } else if (state is SplashAuthenticated) {
             if (state.updateAvailable && context.mounted) {
               await _showSoftUpdateDialog(context, state.latestVersion);
@@ -240,7 +236,7 @@ class _SplashScreenState extends State<SplashScreen>
                                   child: Padding(
                                     padding: const EdgeInsets.all(12.0),
                                     child: Image.asset(
-                                      'assets/images/logo.png',
+                                      'assets/images/refer_logo.png',
                                       fit: BoxFit.contain,
                                       errorBuilder:
                                           (context, error, stackTrace) =>
@@ -273,17 +269,17 @@ class _SplashScreenState extends State<SplashScreen>
                             child: Column(
                               children: [
                                 Text(
-                                  'RAYMUND CAFFE',
+                                  'REFER APP',
                                   style: const TextStyle(
                                     color: Color(0xFF1E3932),
                                     fontSize: 26,
                                     fontWeight: FontWeight.w900,
-                                    letterSpacing: 8,
+                                    letterSpacing: 4,
                                   ),
                                 ),
                                 const SizedBox(height: 8),
                                 Text(
-                                  'CAFFÉ EN GRANOS GOURMET',
+                                  'REFIERE Y GANA',
                                   style: TextStyle(
                                     color: Color(0xFF1E3932).withOpacity(0.6),
                                     fontSize: 10,

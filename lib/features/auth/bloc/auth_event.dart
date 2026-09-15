@@ -26,3 +26,14 @@ class ResetPasswordRequested extends AuthEvent {
   final String newPassword;
   ResetPasswordRequested(this.email, this.code, this.newPassword);
 }
+
+class VerifyEmailRequested extends AuthEvent {
+  final String email;
+  final String code;
+  VerifyEmailRequested(this.email, this.code);
+}
+
+class ResendVerificationRequested extends AuthEvent {
+  final String email;
+  ResendVerificationRequested(this.email);
+}

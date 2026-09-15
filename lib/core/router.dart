@@ -21,6 +21,7 @@ import '../features/search/bloc/search_event.dart';
 import '../features/home/ui/menu_screen.dart';
 import '../features/auth/ui/forgot_password_screen.dart';
 import '../features/auth/ui/reset_password_screen.dart';
+import '../features/auth/ui/verify_email_screen.dart';
 import '../features/stars/ui/stars_history_screen.dart';
 import '../features/stars/bloc/stars_bloc.dart';
 import '../features/stars/bloc/stars_event.dart';
@@ -55,6 +56,13 @@ final router = GoRouter(
       builder: (context, state) {
         final email = state.uri.queryParameters['email'] ?? '';
         return ResetPasswordScreen(email: email);
+      },
+    ),
+    GoRoute(
+      path: '/verify-email',
+      builder: (context, state) {
+        final email = state.uri.queryParameters['email'] ?? '';
+        return VerifyEmailScreen(email: email);
       },
     ),
     GoRoute(path: '/main', builder: (context, state) => const MainNavigator()),

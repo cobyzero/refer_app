@@ -15,13 +15,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String get home => 'Home';
 
   @override
-  String get welcomeSubtitle => 'The perfect roast is just a sign-in away.';
+  String get welcomeSubtitle =>
+      'Your referrals and rewards are just a sign-in away.';
 
   @override
   String get email => 'Email';
 
   @override
-  String get emailHint => 'name@editorialroast.com';
+  String get emailHint => 'name@email.com';
 
   @override
   String get password => 'Password';
@@ -111,7 +112,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get spanish => 'Spanish';
 
   @override
-  String get signupSubtitle => 'Begin your sensory journey with us.';
+  String get signupSubtitle => 'Create your account and start referring.';
 
   @override
   String get fullName => 'Full Name';
@@ -123,8 +124,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get confirmPassword => 'Confirm Password';
 
   @override
-  String get acceptTerms =>
-      'I accept the Terms and Conditions and Privacy Policy.';
+  String acceptTerms(String terms, String privacy) {
+    return 'I accept the $terms and $privacy.';
+  }
 
   @override
   String get keepUpdated =>
@@ -298,6 +300,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get selectFutureTime => 'Please select a time in the future';
+
+  @override
+  String get orderCreateError =>
+      'We couldn\'t create your order. Please try again.';
+
+  @override
+  String get orderConfirmError =>
+      'Your payment was received but we couldn\'t confirm your order. Please contact support.';
 
   @override
   String get errorLoadingOrders => 'Error loading orders';
@@ -722,8 +732,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get resetPassword => 'Reset password';
 
   @override
-  String get agreeTermsPrivacy =>
-      'By signing in you agree to our Terms and Privacy Policy.';
+  String agreeTermsPrivacy(String terms, String privacy) {
+    return 'By signing in you agree to our $terms and $privacy.';
+  }
 
   @override
   String get back => 'Back';
@@ -757,4 +768,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get couldNotOpenStore => 'Couldn\'t open the app store';
+
+  @override
+  String get couldNotOpenLink => 'Couldn\'t open the link';
+
+  @override
+  String get verifyEmailTitle => 'Verify your email';
+
+  @override
+  String verifyEmailSubtitle(String email) {
+    return 'Enter the 6-digit code we sent to $email.';
+  }
+
+  @override
+  String get verifyEmailAction => 'Verify email';
+
+  @override
+  String get emailVerifiedSuccess => 'Email verified! You are signed in.';
+
+  @override
+  String get resendCode => 'Resend code';
+
+  @override
+  String resendCodeCooldown(int seconds) {
+    return 'Resend in ${seconds}s';
+  }
 }

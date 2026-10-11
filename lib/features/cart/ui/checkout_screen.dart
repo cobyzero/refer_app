@@ -68,9 +68,13 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
     // Order-first flow: the button amount is only an estimate; the server
     // prices the order and Stripe charges exactly that.
     final amount = double.parse((TaxConfig.applyTo(total) + serviceFee).toStringAsFixed(2));
-    // En DEV se avisa y se confirma directo sin Stripe (el servidor debe
-    // tener ALLOW_UNVERIFIED_PAYMENTS=true; jamás en prod).
-    if (AppConstants.isDev && widget.redeemedRewardId == null) {
+    // Flujo de prueba: SOLO si el operador lo autorizó en refer_web
+    // (GET /config -> PaymentsConfig.directConfirmAllowed). El servidor
+    // vuelve a validar el flag en POST /orders/:id/confirm: sin pago no hay
+    // confirmación aunque el cliente lo pida. Nada de `isDev` aquí: el
+    // entorno de compilación no autoriza pagos.
+    if (PaymentsConfig.directConfirmAllowed &&
+        widget.redeemedRewardId == null) {
       final proceed = await _showDevBypassDialog(context, amount);
       if (!context.mounted || proceed != true) return;
     }
@@ -168,8 +172,9 @@ class _CheckoutScreenState extends State<CheckoutScreen> {
       return;
     }
     final locationName = inputs['locationName'] as String;
-    // 2. Dev: confirm directly without the sheet.
-    if (AppConstants.isDev) {
+    // 2. Prueba autorizada por el operador: confirm directo sin la sheet.
+    // El servidor valida el flag de nuevo; si está apagado, rechaza.
+    if (PaymentsConfig.directConfirmAllowed) {
       final confirmed = await ordersRepo.confirmOrder(orderId);
       if (!context.mounted) return;
       if (confirmed == null) {

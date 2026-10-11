@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'env.dart';
 import 'network/server_health.dart';
 import 'token_manager.dart';
 import 'constants.dart';
@@ -21,15 +23,21 @@ class ApiClient {
       ),
     );
 
-    dio.interceptors.add(
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: true,
-        error: true,
-        compact: true,
-      ),
-    );
+    // SEGURIDAD: el logger de red solo en debug+dev y SIN headers.
+    // Con requestHeader:true se filtraba `Authorization: Bearer <token>`
+    // y con requestBody:true los passwords de /auth/login a logcat.
+    // En release este bloque no existe: nada llega a logcat.
+    if (kDebugMode && AppEnv.isDev) {
+      dio.interceptors.add(
+        PrettyDioLogger(
+          requestHeader: false,
+          requestBody: true,
+          responseBody: true,
+          error: true,
+          compact: true,
+        ),
+      );
+    }
 
     dio.interceptors.add(
       InterceptorsWrapper(

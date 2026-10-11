@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:refer_app/l10n/app_localizations.dart';
 import 'package:refer_app/core/widgets/app_snackbar.dart';
+import '../../../core/constants.dart';
 import '../../../core/di.dart';
 import '../../../core/theme.dart';
 import '../../cart/bloc/cart_bloc.dart';
@@ -229,27 +230,31 @@ class _VerifyEmailScreenState extends State<VerifyEmailScreen> {
                                       ),
                               ),
                             ),
-                            const SizedBox(height: 16),
-                            // Reenviar con cooldown — 44pt target
-                            Center(
-                              child: TextButton(
-                                onPressed: _cooldownSeconds > 0
-                                    ? null
-                                    : () => _resend(context),
-                                style: TextButton.styleFrom(
-                                  minimumSize: const Size(44, 44),
-                                  tapTargetSize:
-                                      MaterialTapTargetSize.padded,
-                                ),
-                                child: Text(
-                                  _cooldownSeconds > 0
-                                      ? l10n.resendCodeCooldown(
-                                          _cooldownSeconds,
-                                        )
-                                      : l10n.resendCode,
+                            // Reenviar con cooldown — 44pt target. Oculto si el
+                            // operador desactivó la verificación OTP (el
+                            // resend devuelve EMAIL_DISABLED: no llegaría nada).
+                            if (EmailVerification.required) ...[
+                              const SizedBox(height: 16),
+                              Center(
+                                child: TextButton(
+                                  onPressed: _cooldownSeconds > 0
+                                      ? null
+                                      : () => _resend(context),
+                                  style: TextButton.styleFrom(
+                                    minimumSize: const Size(44, 44),
+                                    tapTargetSize:
+                                        MaterialTapTargetSize.padded,
+                                  ),
+                                  child: Text(
+                                    _cooldownSeconds > 0
+                                        ? l10n.resendCodeCooldown(
+                                            _cooldownSeconds,
+                                          )
+                                        : l10n.resendCode,
+                                  ),
                                 ),
                               ),
-                            ),
+                            ],
                           ],
                         ),
                       );

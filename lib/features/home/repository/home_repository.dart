@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 
 import '../../../core/api_client.dart';
+import '../../../core/utils/app_log.dart';
 import '../../../core/models/user.dart';
 import '../../../core/models/product.dart';
 import '../../../core/models/product_category.dart';
@@ -27,8 +28,9 @@ class HomeRepositoryImpl implements HomeRepository {
     if (data is String) {
       try {
         return jsonDecode(data);
-      } catch (e) {
-        print('Error decoding JSON: $e');
+      } catch (_) {
+        // Sin $e: el cuerpo puede contener PII.
+        AppLog.d('Error decoding JSON response');
       }
     }
     return data;
@@ -42,10 +44,11 @@ class HomeRepositoryImpl implements HomeRepository {
         final parsedData = _parseData(response.data);
         return User.fromJson(parsedData);
       }
-      print('getProfile returned status: ${response.statusCode}');
+      AppLog.d('getProfile unexpected status: ${response.statusCode}');
       return null;
-    } catch (e, stacktrace) {
-      print('Error in getProfile: $e\n$stacktrace');
+    } catch (e) {
+      // Solo el tipo, sin mensaje/stacktrace (pueden llevar token o PII).
+      AppLog.d('getProfile failed: ${e.runtimeType}');
       return null;
     }
   }
@@ -76,8 +79,8 @@ class HomeRepositoryImpl implements HomeRepository {
         return DashboardSummary.fromJson(parsedData);
       }
       return null;
-    } catch (e, stacktrace) {
-      print('Error in getSummary: $e\n$stacktrace');
+    } catch (e) {
+      AppLog.d('getSummary failed: ${e.runtimeType}');
       return null;
     }
   }

@@ -665,13 +665,13 @@ abstract class AppLocalizations {
   /// No description provided for @orderCreateError.
   ///
   /// In en, this message translates to:
-  /// **'We couldn't create your order. Please try again.'**
+  /// **'We couldn\'t create your order. Please try again.'**
   String get orderCreateError;
 
   /// No description provided for @orderConfirmError.
   ///
   /// In en, this message translates to:
-  /// **'Your payment was received but we couldn't confirm your order. Please contact support.'**
+  /// **'Your payment was received but we couldn\'t confirm your order. Please contact support.'**
   String get orderConfirmError;
 
   /// No description provided for @errorLoadingOrders.

@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/utils/app_log.dart';
 import '../repository/cart_socket_manager.dart';
 import '../model/cart_item.dart';
 import 'cart_event.dart';
@@ -28,7 +29,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     // No pisar un carrito ya cargado con CartLoading: cada MainNavigator
     // re-emite CartStarted y eso hacía parpadear badge y lista.
     if (state is! CartLoaded) emit(CartLoading());
-    print('Socket: Emitting getCart event...');
+    AppLog.d('Socket: Emitting getCart event...');
     if (!socketManager.isConnected) {
       // El bloc se crea al abrir la app, antes del primer login (sin token).
       // Al entrar a /main tras iniciar sesión hay que conectar aquí;
@@ -43,7 +44,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   Future<void> reconnect() => socketManager.reconnect();
 
   void _onCartAdded(CartAdded event, Emitter<CartState> emit) {
-    print('Socket: Emitting addToCart event...');
+    AppLog.d('Socket: Emitting addToCart event...');
     // Actualización optimista: el badge y la lista reaccionan al instante;
     // el servidor confirma vía `cartUpdated` y reemplaza este estado.
     final current = state;
@@ -96,7 +97,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   }
 
   void _onCartRemoved(CartRemoved event, Emitter<CartState> emit) {
-    print('Socket: Emitting removeItem event...');
+    AppLog.d('Socket: Emitting removeItem event...');
     final current = state;
     if (current is CartLoaded) {
       final items = current.items.where((i) => i.id != event.cartItemId).toList();
@@ -109,7 +110,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     CartItemQuantityUpdated event,
     Emitter<CartState> emit,
   ) {
-    print('Socket: Emitting updateQuantity event...');
+    AppLog.d('Socket: Emitting updateQuantity event...');
     final current = state;
     if (current is CartLoaded) {
       if (event.newQuantity <= 0) {
@@ -150,7 +151,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     CartUpdatedLocally event,
     Emitter<CartState> emit,
   ) {
-    print('Socket: Cart updated with ${event.items.length} items');
+    AppLog.d('Socket: Cart updated with ${event.items.length} items');
     emit(CartLoaded(items: event.items.cast<CartItem>(), total: event.total));
   }
 

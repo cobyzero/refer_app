@@ -302,7 +302,8 @@ class AppLocalizationsEs extends AppLocalizations {
   String get selectFutureTime => 'Por favor selecciona una hora en el futuro';
 
   @override
-  String get orderCreateError => 'No pudimos crear tu pedido. Intenta de nuevo.';
+  String get orderCreateError =>
+      'No pudimos crear tu pedido. Intenta de nuevo.';
 
   @override
   String get orderConfirmError =>

@@ -1,29 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../l10n/app_localizations.dart';
+import '../env.dart';
 import '../widgets/app_snackbar.dart';
 
 /// URLs de los documentos legales, publicados en la web de Refer.
-/// Configurables en el `.env` (`TERMS_URL` / `PRIVACY_URL`); por defecto
-/// apuntan a `https://refer.cobyzero.com/terms` y `/privacy`.
+/// Configurables vía `--dart-define` o `.env` dev (`TERMS_URL` / `PRIVACY_URL`);
+/// ver `lib/core/env.dart` y `.env.example`.
 class LegalUrls {
   const LegalUrls._();
 
   static const defaultTerms = 'https://refer.cobyzero.com/terms';
   static const defaultPrivacy = 'https://refer.cobyzero.com/privacy';
 
-  static String _env(String key) => dotenv.env[key]?.trim() ?? '';
-
   static String get terms {
-    final v = _env('TERMS_URL');
+    final v = AppEnv.termsUrl;
     if (v.isNotEmpty) return v;
     return defaultTerms;
   }
 
   static String get privacy {
-    final v = _env('PRIVACY_URL');
+    final v = AppEnv.privacyUrl;
     if (v.isNotEmpty) return v;
     return defaultPrivacy;
   }

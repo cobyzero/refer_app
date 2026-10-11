@@ -119,6 +119,8 @@ app.*.symbols
 # Env
 .env
 !.env.example
+# Generado por envied: contiene secretos ofuscados, se regenera en CI
+lib/core/secure_env.g.dart
 
 # FVM Version Cache
 .fvm/

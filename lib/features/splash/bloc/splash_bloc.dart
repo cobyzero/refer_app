@@ -36,6 +36,11 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
       TaxConfig.enabled = config.taxEnabled;
       TaxConfig.rate = config.taxRate;
       ServiceFee.rate = config.serviceFeeRate;
+      // Pagos de prueba autorizados por el operador (refer_web).
+      PaymentsConfig.directConfirmAllowed = config.directConfirmEnabled;
+      // Verificación OTP: con false, registro/login devuelven sesión directa
+      // y la app salta la vista OTP (el operador lo apaga en refer_web o .env).
+      EmailVerification.required = config.emailVerificationRequired;
 
       // 2. Chequeo de versión instalada vs API (GET /config).
       var updateStatus = UpdateStatus.ok;

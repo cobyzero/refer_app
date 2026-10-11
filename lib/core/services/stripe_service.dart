@@ -1,27 +1,27 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
+import '../env.dart';
 import '../api_client.dart';
 
 class StripeService {
   final ApiClient apiClient;
 
-  static String get publishableKey {
-    final fromEnv = dotenv.env['STRIPE_PUBLISHABLE_KEY']?.trim();
-    if (fromEnv != null && fromEnv.isNotEmpty) return fromEnv;
-    // Fallback (matches logs pi_3TMDysBVQCFU1ZTs...)
-    return 'pk_test_51OdiwLBVQCFU1ZTs1OsLhnEHt4NgzfpQ2O65r3vQsA6ZcPhNUIdXChcMYeNHiqE4wAM5lXyRPrhOoKBFB5UTcE9V00ddPMqfGS';
-  }
+  /// Key pública desde AppEnv (--dart-define o .env dev).
+  /// Sin fallback hardcodeado: si falta, se falla en voz alta en init().
+  static String get publishableKey => AppEnv.stripePublishableKey;
 
-  static String get merchantIdentifier {
-    final fromEnv = dotenv.env['STRIPE_MERCHANT_IDENTIFIER']?.trim();
-    if (fromEnv != null && fromEnv.isNotEmpty) return fromEnv;
-    return 'merchant.com.example.refer_app';
-  }
+  static String get merchantIdentifier => AppEnv.stripeMerchantIdentifier;
 
   StripeService({required this.apiClient});
 
   static Future<void> init() async {
+    if (publishableKey.isEmpty) {
+      throw StateError(
+        'Falta STRIPE_PUBLISHABLE_KEY (--dart-define en release o .env en dev). '
+        'Ver .env.example y lib/core/env.dart.',
+      );
+    }
     Stripe.publishableKey = publishableKey;
     Stripe.merchantIdentifier = merchantIdentifier;
     await Stripe.instance.applySettings();
@@ -66,6 +66,18 @@ class StripeService {
     } catch (e) {
       if (e is StripeException) {
         onError(e.error.localizedMessage ?? 'Transaction cancelled');
+      } else if (e is DioException) {
+        // El backend ya devuelve mensaje limpio (p. ej. monto bajo el
+        // mínimo de Stripe). Mostrarlo en vez del DioException crudo.
+        final data = e.response?.data;
+        final backendMsg = data is Map ? data['message']?.toString() : null;
+        if (backendMsg != null && backendMsg.trim().isNotEmpty) {
+          onError(backendMsg);
+        } else if (e.response?.statusCode == 400) {
+          onError('Payment rejected for this amount');
+        } else {
+          onError('Could not start payment. Try again.');
+        }
       } else {
         onError(e.toString());
       }

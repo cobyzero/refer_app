@@ -48,6 +48,24 @@ class AppConfig {
     return rate;
   }
 
+  /// Si las cuentas nuevas deben verificar email por OTP. Lo decide el
+  /// operador (refer_web → configuración, o `.env` en la API →
+  /// GET /config `features.emailVerificationRequired`).
+  /// Fail-closed: si el flag falta (API vieja), se asume true y la app
+  /// muestra la vista OTP como siempre.
+  bool get emailVerificationRequired {
+    return features['emailVerificationRequired'] ?? true;
+  }
+
+  /// Confirmación directa sin Stripe (solo pruebas, lo autoriza el operador
+  /// en refer_web → GET /config `features.directConfirmEnabled`).
+  /// Fail-closed: cualquier valor distinto de true/1 es false.
+  bool get directConfirmEnabled {
+    if (features['directConfirmEnabled'] == true) return true;
+    final v = (settings['direct_confirm_enabled'] ?? '').trim().toLowerCase();
+    return v == 'true' || v == '1';
+  }
+
   factory AppConfig.fromJson(Map<String, dynamic> json) {
     return AppConfig(
       version: json['version'] ?? '',

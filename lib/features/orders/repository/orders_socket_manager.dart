@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import '../../../core/token_manager.dart';
 import '../../../core/constants.dart';
+import '../../../core/utils/app_log.dart';
 
 class OrdersSocketManager {
   final TokenManager tokenManager;
@@ -25,13 +26,13 @@ class OrdersSocketManager {
       }).build(),
     );
 
-    _socket!.onConnect((_) => print('Connected to orders socket'));
+    _socket!.onConnect((_) => AppLog.d('Connected to orders socket'));
 
     _socket!.on('orderStatusUpdated', (data) {
       _orderStatusController.add(data);
     });
 
-    _socket!.onDisconnect((_) => print('Disconnected from orders socket'));
+    _socket!.onDisconnect((_) => AppLog.d('Disconnected from orders socket'));
   }
 
   void disconnect() {

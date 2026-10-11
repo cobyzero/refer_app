@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:refer_app/features/cart/bloc/pickup_time_bloc.dart';
 import 'package:refer_app/l10n/app_localizations.dart';
 import 'core/theme.dart';
+import 'core/env.dart';
 import 'core/widgets/app_snackbar.dart';
 import 'core/di.dart';
 import 'core/router.dart';
@@ -18,7 +18,8 @@ import 'package:liquid_glass_widgets/liquid_glass_widgets.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load();
+  // .env solo dev (no empaquetado); en release todo viene de --dart-define.
+  await AppEnv.load();
   await StripeService.init();
   initDI();
   await LiquidGlassWidgets.initialize();

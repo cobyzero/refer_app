@@ -1,20 +1,14 @@
 import 'dart:io';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'env.dart';
 
 class AppConstants {
-  static String _env(String key) => dotenv.env[key]?.trim() ?? '';
-
-  /// Entorno activo definido en .env: `ENV=dev | prod`.
+  /// Entorno activo: `ENV=dev | prod` vía `--dart-define` o `.env` (dev).
   /// Acepta: dev / development / prod / production (case-insensitive).
   /// Cualquier otro valor (o vacío) => dev.
-  static String get environment {
-    final v = _env('ENV').toLowerCase();
-    if (v == 'prod' || v == 'production') return 'prod';
-    return 'dev';
-  }
+  static String get environment => AppEnv.env;
 
-  static bool get isProd => environment == 'prod';
-  static bool get isDev => !isProd;
+  static bool get isProd => AppEnv.isProd;
+  static bool get isDev => AppEnv.isDev;
 
   static bool get _isAndroid {
     try {
@@ -25,25 +19,15 @@ class AppConstants {
   }
 
   static String get baseUrl {
-    // 1. Variables por entorno (nuevo esquema)
-    final envKey = isProd ? 'PROD_BASE_URL_ANDROID' : 'DEV_BASE_URL_ANDROID';
+    // Variables por entorno vía AppEnv (--dart-define primero, .env solo dev).
     if (_isAndroid) {
-      final v = _env(envKey);
+      final v = isProd ? AppEnv.prodBaseUrlAndroid : AppEnv.devBaseUrlAndroid;
       if (v.isNotEmpty) return v.replaceAll(RegExp(r'/+$'), '');
     }
-    final mainKey = isProd ? 'PROD_BASE_URL' : 'DEV_BASE_URL';
-    final v = _env(mainKey);
-    if (v.isNotEmpty) return v.replaceAll(RegExp(r'/+$'), '');
+    final main = isProd ? AppEnv.prodBaseUrl : AppEnv.devBaseUrl;
+    if (main.isNotEmpty) return main.replaceAll(RegExp(r'/+$'), '');
 
-    // 2. Fallback: esquema anterior (BASE_URL / BASE_URL_ANDROID)
-    if (_isAndroid) {
-      final legacy = _env('BASE_URL_ANDROID');
-      if (legacy.isNotEmpty) return legacy.replaceAll(RegExp(r'/+$'), '');
-    }
-    final legacy = _env('BASE_URL');
-    if (legacy.isNotEmpty) return legacy.replaceAll(RegExp(r'/+$'), '');
-
-    // 3. Defaults por plataforma
+    // Defaults por plataforma (solo dev; en prod AppEnv exige PROD_BASE_URL).
     if (_isAndroid) return 'http://10.0.2.2:3000';
     return 'http://127.0.0.1:3000';
   }
@@ -115,4 +99,24 @@ class ServiceFee {
 
   /// Monto de la tarifa sobre el subtotal.
   static double amountFor(double subtotal) => subtotal * rate;
+}
+
+/// Confirmación directa sin Stripe, autorizada por el OPERADOR en la web
+/// (refer_web → configuración → GET /config `features.directConfirmEnabled`).
+/// La actualiza SplashBloc al cargar. Default false (fail-closed).
+/// La app jamás decide por `isDev`: el servidor también valida el flag
+/// en POST /orders/:id/confirm y rechaza sin pago si está apagado.
+class PaymentsConfig {
+  static bool directConfirmAllowed = false;
+}
+
+/// Verificación OTP de email para cuentas nuevas, decidida por el OPERADOR
+/// (módulo de configuración en refer_web, o `.env` en la API) y expuesta en
+/// GET /config `features.emailVerificationRequired`.
+/// La actualiza SplashBloc al cargar. Default true (fail-closed = conducta
+/// actual): si el flag falta (API vieja), la app asume que sí hay OTP y
+/// muestra la vista de verificación. Con false, el registro/login devuelven
+/// sesión directa y la app entra sin pasar por OTP.
+class EmailVerification {
+  static bool required = true;
 }

@@ -1,6 +1,7 @@
 import 'package:socket_io_client/socket_io_client.dart' as io;
 import '../../../core/token_manager.dart';
 import '../../../core/constants.dart';
+import '../../../core/utils/app_log.dart';
 import '../model/cart_item.dart';
 
 class CartSocketManager {
@@ -38,7 +39,7 @@ class CartSocketManager {
       );
 
       socket?.onConnect((_) {
-        print('Connected to /cart namespace');
+        AppLog.d('Connected to /cart namespace');
         // Auto-recuperación: cada (re)conexión pide el carrito para que
         // el badge y la lista se llenen aunque el socket se haya
         // conectado después (p. ej. justo tras el login).
@@ -51,8 +52,9 @@ class CartSocketManager {
         }
       });
 
-      socket?.onDisconnect((_) => print('Disconnected from /cart namespace'));
-      socket?.onError((err) => print('Socket error: $err'));
+      socket?.onDisconnect((_) => AppLog.d('Disconnected from /cart namespace'));
+      // Sin $err: el detalle del socket puede incluir el token de auth.
+      socket?.onError((_) => AppLog.d('Socket error on /cart namespace'));
     } finally {
       _connecting = false;
     }

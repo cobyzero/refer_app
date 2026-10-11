@@ -59,7 +59,7 @@ dependencies:
   flutter_stripe: ^12.1.0
   liquid_glass_widgets: ^0.21.1
   cached_network_image: ^3.4.1
-  flutter_dotenv: ^6.0.1
+  envied: ^1.1.1
   package_info_plus: ^9.0.1
   url_launcher: ^6.3.2
 
@@ -78,6 +78,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
   build_runner: ^2.10.5
+  envied_generator: ^1.1.1
   injectable_generator: ^2.12.0
   patrol: ^4.6.1
 
@@ -96,7 +97,8 @@ flutter:
   assets:
     - assets/images/
     - assets/icon/
-    - .env
+    # NOTA SEGURIDAD: `.env` NO va aquí. Se lee solo en dev desde disco;
+    # en release todo llega vía `--dart-define` (ver lib/core/env.dart).
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
